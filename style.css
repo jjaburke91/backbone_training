@@ -1,0 +1,13 @@
+body {
+	max-width: 60em; 
+	margin: 0 auto;
+	padding: 0 1em;
+}
+
+#pageTitle {
+	text-align: center;
+}
+
+#content {
+	border: 1px solid gold;
+}

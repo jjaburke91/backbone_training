@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Backbone Sandbox</title>
+	<meta name="description" content="">
+	
+	<link type="text/css" href="style.css" rel="stylesheet" />
+	
+	<script src="lib/jquery-1.11.1.js"></script>
+	<script src="lib/handlebars-v1.3.0.js"></script>
+	<script src="lib/underscore-min.js"></script>
+	<script src="lib/backbone-min.js"></script>
+</head>
+<body >
+	<h1 id="pageTitle">Backbone Sandbox</h1>
+	
+	<div id="content">
+		
+		<div id="article-listing">
+
+		</div>
+		
+	</div>
+	
+	
+	
+	<script id="article-template" type="text/x-handlebars-template">
+		
+			<div id="opened-article">
+				<div class="listing-article-title">
+					({{title}}) ({{id}})
+				</div>
+				<div class="listing-article-body">
+					({{{summary}}})
+				</div>
+			</div>
+			
+	</script>
+	
+	<script src="demo.js"></script>
+
+</body>
+</html>
