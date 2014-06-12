@@ -1,3 +1,11 @@
+var tags = ["*"],
+	page = 1,
+	pageSize = 5,
+	excludes = [],
+	baseUrl = "/scrip/article-listings";
+	
+	
+
 // ***** MODELS *****
 
 // Article model
@@ -25,8 +33,9 @@ for (var i=1; i <= 5; i++) { articles.addItem(i); }
 
 // Listing model
 var Listing = Backbone.Collection.extend({
-	model: Article
-} );
+	model: Article,
+	url: createQueryURL(tags, page, pageSize, excludes)
+});
 var listing = new Listing(articles.items);
 
 
@@ -58,32 +67,11 @@ var ListingView = Backbone.View.extend( {
 var listingView = new ListingView();
 
 
-// NON BACKBONE
 
-var LISTING_NAVIGATION = {
-    listingType : "Latest News",
-    highLevelTag : "*",
-    lowLevelTags : [],
+// ***** MISC *****
 
-    addLowLevelTag : function( newLowLevelTag) {
-        this.lowLevelTags.push( newLowLevelTag);
-    },
-    removeLowLevelTag : function( tagToRemove) {
-        var item = this.lowLevelTags.indexOf( tagToRemove);
-        this.lowLevelTags.splice(item, 1);
-    },
-
-    replaceHighLevelTag : function ( newHighLevelTag) {
-        if ( newHighLevelTag === "All") {
-            newHighLevelTag = "*";
-        }
-        this.highLevelTag = newHighLevelTag;
-    },
-
-    resetListing : function() {
-        this.listingType = "Latest News";
-        this.highLevelTag = "*";
-        this.lowLevelTags = [];
-    }
-};
-
+function createQueryURL(tags, page, pageSize, excludes) {
+    var url = "tags="+tags + "&page="+page + "&pageSize="+pageSize + "&returnExtraRow=true&exclude="+excludes;
+    console.log("Controller Query URL: " + "http://localhost:8080/scrip/article-listings/get-tagged-articles-OR.json?" + url);
+    return "http://localhost:8080/scrip/article-listings/get-tagged-articles-OR.json?" + url;
+}
