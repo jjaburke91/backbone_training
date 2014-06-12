@@ -27,29 +27,11 @@ for (var i=1; i <= 5; i++) {
 
 
 // Listing model
-var Listing = Backbone.Model.extend({
-	initialize: function() {
-		console.log("A new listing model has been created.");
-		this.on('change', function() {
-			console.log("The listing has been updated:\n" + this.attributes.title);
-		});
-	},
-	
-	defaults: {
-		title: "Listing model.",
-		articles: [],
-	},
-	
-	addArticle: function( article) {
-		this.attributes.articles.push( article);
-	}
-
+var Listing = Backbone.Collection.extend({
+	model: Article
 } );
 
-var listing = new Listing( {
-	"articles": articles.items
-});
-
+var listing = new Listing(articles.items);
 
 
 
@@ -59,23 +41,24 @@ var ListingView = Backbone.View.extend( {
 	el: $("#article-listing"),
 	tagName: 'div',
 	listingTmpl: Handlebars.compile( $("#article-template").html() ),
-	"model": listing,
+	collection: listing,
 
 	
 	initialize: function (options) {
 		this.options = options || {};
+		this.render();
 	},
 	
 	// Re-render the title of the todo item.
 	render: function() {
-		var articles = this.model.get("articles");
-		var newHtml = "";
-		for( var i=0; i < articles.length; i++) {
-			newHtml += this.listingTmpl( articles[i].toJSON() );
-		}
-		this.$el.html( newHtml );
+		var that = this,
+			newHtml = "";
 		
-				
+		this.collection.forEach( function(model) {
+			newHtml += that.listingTmpl( model.toJSON() );
+		});
+		this.$el.html( newHtml );
+					
 		return this;
 	}
 
