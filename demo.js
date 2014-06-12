@@ -8,8 +8,8 @@ var Article = Backbone.Model.extend( {
 	
 	defaults: {
 		"id": 0,
-		"title": "Article title",
-		"summary": "This is the article summary."
+		"title": "Default Article title",
+		"summary": "This is the article summary. This is the article summary. This is the article summary. This is the article summary."
 	}
 });
 var articles = {
@@ -20,17 +20,13 @@ var articles = {
 		}));
 	}
 }	
-
-for (var i=1; i <= 5; i++) {
-	articles.addItem(i);
-}
+for (var i=1; i <= 5; i++) { articles.addItem(i); }
 
 
 // Listing model
 var Listing = Backbone.Collection.extend({
 	model: Article
 } );
-
 var listing = new Listing(articles.items);
 
 
@@ -42,28 +38,23 @@ var ListingView = Backbone.View.extend( {
 	tagName: 'div',
 	listingTmpl: Handlebars.compile( $("#article-template").html() ),
 	collection: listing,
-
 	
 	initialize: function (options) {
 		this.options = options || {};
 		this.render();
 	},
 	
-	// Re-render the title of the todo item.
 	render: function() {
-		var that = this,
-			newHtml = "";
+		var that = this;
 		
 		this.collection.forEach( function(model) {
-			newHtml += that.listingTmpl( model.toJSON() );
+			that.$el.append( that.listingTmpl( model.toJSON() ) );
 		});
-		this.$el.html( newHtml );
 					
 		return this;
 	}
 
 });
-
 var listingView = new ListingView();
 
 
